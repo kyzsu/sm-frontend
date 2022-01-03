@@ -6,9 +6,26 @@ import { FcGoogle } from "react-icons/fc";
 import shareVideo from "../assets/share.mp4";
 import logo from "../assets/logowhite.png";
 
+import { client } from "../client";
+
 const Login = () => {
-  const responseGoogle = (response) => {
-    console.log(response);
+  const navigate = useNavigate();
+
+  const responseGoogle = (res) => {
+    localStorage.setItem("user", JSON.stringify(res.profileObj));
+
+    const { name, googleId, imageUrl } = res.profileObj;
+
+    const doc = {
+      _id: googleId,
+      _type: "user",
+      userName: name,
+      image: imageUrl,
+    };
+
+    client.createIfNotExists(doc).then(() => {
+      navigate("/", { replace: true });
+    });
   };
   return (
     <div className="flex justify-start items-center flex-col h-screen">
