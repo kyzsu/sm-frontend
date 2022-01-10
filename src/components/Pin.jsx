@@ -14,10 +14,8 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
   const navigate = useNavigate();
   const userInfo = fetchUser();
 
-  console.log(save);
-
   const alreadySaved = !!save?.filter(
-    (item) => item.postedBy._id === userInfo.googleId
+    (item) => item.postedBy._id === userInfo?.googleId
   )?.length;
 
   const savePin = (id) => {
@@ -30,10 +28,10 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
         .insert("after", "save[-1]", [
           {
             _key: uuidv4(),
-            userId: userInfo.googleId,
+            userId: userInfo?.googleId,
             postedBy: {
               _type: "postedBy",
-              _ref: userInfo.googleId,
+              _ref: userInfo?.googleId,
             },
           },
         ])
@@ -114,7 +112,7 @@ const Pin = ({ pin: { postedBy, image, _id, destination, save } }) => {
                     : destination}
                 </a>
               )}
-              {postedBy?._id === userInfo.googleId && (
+              {postedBy?._id === userInfo?.googleId && (
                 <button
                   type="button"
                   onClick={(e) => {
