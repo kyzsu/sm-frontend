@@ -14,9 +14,9 @@ const Login = () => {
   const responseGoogle = (res) => {
     localStorage.setItem("user", JSON.stringify(res.profileObj));
 
-    console.log("response auth: ", res);
+    console.log(res);
 
-    const { name, googleId, imageUrl } = res.profileObj;
+    const { name, googleId, imageUrl } = res?.profileObj;
 
     const doc = {
       _id: googleId,
